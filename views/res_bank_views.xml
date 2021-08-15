@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+
+        <!-- <record id="base.action_res_bank_form" model="ir.actions.act_window">
+            <field name="domain">[('country.id', 'in', [company.country_id.id])]</field>
+        </record> -->
+    
+        <menuitem id="bank_menu_root" name="Bank" action="base.action_res_bank_form" web_icon="virtucent,static/description/bank.png"/>
+        <menuitem id="bank_acc_menu" name="Bank Account" action="base.action_res_partner_bank_account_form" parent="bank_menu_root"/>
+    
+    </data>
+</odoo>

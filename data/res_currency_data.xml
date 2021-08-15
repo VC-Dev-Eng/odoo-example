@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="base.USD" model="res.currency">
+            <field name="active" eval="False"/>
+        </record>
+        <record id="base.EUR" model="res.currency">
+            <field name="active" eval="False"/>
+        </record>
+        <record id="base.NZD" model="res.currency">
+        </record>
+        <record id="base.IDR" model="res.currency">
+        </record>
+    </data>
+</odoo>

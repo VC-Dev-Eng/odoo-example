@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record id="virtucent_groups" model="ir.module.category">
+            <field name="name">Virtucent</field>
+        </record>
+
+        <record id="virtucent_customer" model="res.groups">
+            <field name="name">Customer</field>
+            <field name="category_id" ref="virtucent_groups"/>
+        </record>
+
+        <record id="base.template_portal_user_id" model="res.users">
+            <field name="company_ids" eval="[(4, ref('virtucent.company_2'))]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_portal'), ref('website.group_website_publisher'), ref('virtucent.virtucent_customer')])]"/>
+        </record>
+    </data>
+</odoo>

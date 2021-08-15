@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="base.main_company" model="res.company">
+            <field name="name">Virtucent New Zealand</field>
+            <field name="currency_id" ref="base.NZD"/>
+            <field name="country_id" ref="base.nz"/>
+        </record>
+        <record id="company_2" model="res.company">
+            <field name="name">Virtucent Indonesia</field>
+            <field name="country_id" ref="base.id"/>
+            <field name="currency_id" ref="base.IDR"/>
+        </record>
+    </data>
+</odoo>

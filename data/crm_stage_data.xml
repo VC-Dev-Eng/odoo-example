@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record model="crm.stage" id="stage1">
+            <field name="name">Request</field>
+            <field name="sequence">1</field>
+        </record>
+        <record model="crm.stage" id="stage2">
+            <field name="name">Confirmed</field>
+            <field name="sequence">2</field>
+        </record>
+        <record model="crm.stage" id="stage3">
+            <field name="name">Done</field>
+            <field name="sequence">3</field>
+        </record>
+    </data>
+</odoo>

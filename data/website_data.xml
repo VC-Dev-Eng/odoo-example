@@ -1,0 +1,184 @@
+<odoo>
+
+	<data>
+		<record id="website.default_website" model="website">
+			<field name="name">Virtucent NZ</field>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="user_id" ref="base.public_user"/>
+		</record>
+		<record id="website_id" model="website">
+			<field name="name">Virtucent ID</field>
+			<field name="company_id" ref="virtucent.company_2"/>
+			<field name="user_id" ref="base.public_user"/>
+		</record>
+	</data>
+
+	<template id="virtucent_homepage" name="Home">
+		<t t-call="website.layout">
+			<form class="h-100 w-100 d-flex flex-column" action="/submit">
+				<div class="d-flex m-auto justify-content-around">
+					<span class="m-3">
+						<label class="d-block" for="send_amount">You Send</label>
+						<span>
+							<input class="border-0 rounded-left d-inline" type="text" name="send_amount"/>
+							<select class="border-0 rounded-right d-inline" name="sender_country_id">
+								<t t-foreach="website1" t-as="websites">
+									<t t-if="websites.id != website.id">
+										<option t-esc="websites.company_id.currency_id.name" t-att-value="websites.company_id.currency_id.id"/>
+									</t>
+									<t t-else="">
+										<option selected="true" t-esc="website.company_id.currency_id.name" t-att-value="website.company_id.currency_id.id"/>
+									</t>
+								</t>
+							</select>
+						</span>
+					</span>
+					<span class="m-3">
+						<label class="d-block" for="recipient_get">Recipient gets</label>
+						<span>
+							<input class="border-0 rounded-left d-inline" type="text" id="recipient_get"/>
+							<select class="border-0 rounded-right d-inline" name="recipient_country_id">
+								<t t-foreach="website2" t-as="websites">
+									<t t-if="websites.id != website.id">
+										<option t-esc="websites.company_id.currency_id.name" t-att-value="websites.company_id.currency_id.id"/>
+									</t>
+									<t t-else="">
+										<option disabled="true" t-esc="website.company_id.currency_id.name" t-att-value="website.company_id.currency_id.id"/>
+									</t>
+								</t>
+							</select>
+						</span>
+					</span>
+				</div>
+				<div class="h-25 w-50 m-auto rounded">
+					<t t-if="uid">
+						<input type="submit" value="Submit"/>
+					</t>
+				</div>
+			</form>
+		</t>
+    </template>
+
+    <template id="transfer_request_submitted">
+        <t t-call="website.layout">
+        	<div id="box">
+	        	<div class="box"/>
+	            <div class="box box-container2" id="container2">
+					<div class="result">
+						<div id="senderSend"/>
+						<div id="fee"/>
+						<div id="rate"/>
+						<div id="recipientGet"/>
+					</div>
+				</div>
+			</div>
+        </t>
+    </template>
+
+	<template id="portal_my_home_transfer_request" name="Show Transfer Requests" customize_show="True" inherit_id="portal.portal_my_home">
+		<xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+			<t t-call="portal.portal_docs_entry">
+				<t t-set="title">My Requests</t>
+				<t t-set="url" t-value="'/my/requests'"/>
+				<t t-set="placeholder_count" t-value="'request_count'"/>
+			</t>
+		</xpath>
+	</template>
+
+	<template id="portal_my_requests" name="My Account">
+		<t t-call="portal.portal_layout">
+			<t t-set="breadcrumbs_searchbar" t-value="True"/>
+			<t t-call="portal.portal_searchbar">
+				<t t-set="title">My Requests</t>
+			</t>
+			<t t-if="not requests">
+				<p>There are currently no orders for your account.</p>
+			</t>
+			<t t-if="requests" t-call="portal.portal_table">
+				<thead class="active">
+					<tr>
+						<th>Reference no.</th>
+						<th>Request date</th>
+						<th>Send from</th>
+						<th>Send to</th>
+						<th>Send Amount</th>
+						<th>Recipient get</th>
+						<th>Recipient bank account</th>
+						<th>Proof of payment</th>
+						<th>State</th>
+					</tr>
+				</thead>
+				<tbody>
+					<t t-foreach="requests" t-as="request">
+						<tr>
+							<td><t t-esc="request.name" t-att-value="request.id"/></td>
+							<td><t t-esc="request.create_date" t-att-value="request.id"/></td>
+							<td><t t-esc="request.sender_country_id.name" t-att-value="request.id"/></td>
+							<td><t t-esc="request.recipient_country_id.name" t-att-value="request.id"/></td>
+							<td><t t-esc="request.send_amount" t-att-value="request.id"/></td>
+							<td><t t-esc="request.recipient_get" t-att-value="request.id"/></td>
+							<td><t t-esc="request.recipient_bank_acc_id" t-att-value="request.id"/></td>
+							<td>
+								<input type="file"/>
+							</td>
+							<td><t t-esc="request.stage_id.name" t-att-value="request.id"/></td>
+						</tr>
+					</t>
+				</tbody>
+			</t>
+		</t>
+    </template>
+	
+	<template id="inherit_my_account_link" inherit_id="portal.my_account_link">
+		<xpath expr="//a[@href='/my/home']" position="replace">
+			<t t-if="user_id.partner_id.employee == True">
+				<a href="/web" role="menuitem" class="dropdown-item">My Account</a>
+			</t>
+			<t t-else="">
+				<a href="/my/home" role="menuitem" class="dropdown-item">My Account</a>
+			</t>
+		</xpath>
+	</template>
+
+    <template id="assets_frontend" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+			<script type="javascript" src="/virtucent/static/src/js/script.js"/>
+            <!-- <link href="/virtucent/static/src/css/style.css" rel="stylesheet" type="text/css"/> -->
+            <link rel="icon" type="image/icon" href="/virtucent/static/src/img/Logo.png"/>
+        </xpath>
+    </template>
+
+    <template id="replace_favicon" inherit_id="website.layout">
+	    <xpath expr="//head//link" position="after">
+	        <link rel="icon" type="image/icon" href="/virtucent/static/src/img/Logo.png"/>
+	    </xpath>
+	</template>
+
+	<template id="replace_header" inherit_id="website.template_header_default">
+	    <xpath expr="//nav[@class='navbar navbar-expand-lg navbar-light o_colored_level o_cc shadow-sm']" position="attributes">
+	    	<attribute name="style">
+	    		background-color: #502F9A;
+	    	</attribute>
+	    </xpath>
+	    <xpath expr="//t[@t-foreach='website.menu_id.child_id']" position="replace"/>
+	</template>
+
+	<template id="replace_header_logo" inherit_id="website.option_header_brand_logo">
+	    <xpath expr="//a//span" position="replace">
+	    	<img t-att-aria-label="'Logo of %s' % website.name" t-att-title="website.name" src="/virtucent/static/src/img/LogoText.png"/>
+	    </xpath>
+	</template>
+
+	<template id="replace_footer" inherit_id="website.footer_custom" name="Footer">
+        <xpath expr="//div[@id='footer']" position="replace"/>
+    </template>
+
+    <template id="layout_footer_copyright" inherit_id="website.layout" name="Footer Copyright">
+		<xpath expr="//footer" position="attributes">
+			<attribute name="style">
+	    		background-color: #502F9A;
+	    	</attribute>
+		</xpath>
+	</template>
+
+</odoo>

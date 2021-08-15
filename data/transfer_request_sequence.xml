@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+    
+        <record id="seq_transfer_request_virtucent_id" model="ir.sequence">
+            <field name="name">Transfer Request</field>
+            <field name="code">transfer.request</field>
+            <field name="company_id" ref="virtucent.company_2"/>
+            <field name="prefix">TR/IDR/NZD/%(month)s/%(y)s/</field>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="seq_transfer_request_new_virtucent_nz" model="ir.sequence">
+            <field name="name">Transfer Request</field>
+            <field name="code">transfer.request</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="prefix">TR/NZD/IDR/%(month)s/%(y)s/</field>
+            <field name="padding">5</field>
+        </record>
+    
+    </data>
+</odoo>

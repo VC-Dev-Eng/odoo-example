@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+administration_transfer_request,administration_transfer_request,model_transfer_request,base.group_user,1,1,1,0
+administration_crm_stage,administration_crm_stage,model_crm_stage,base.group_user,1,1,1,1
+customer_transfer_request,customer_transfer_request,model_transfer_request,virtucent.virtucent_customer,1,1,1,0
+customer_crm_stage,customer_crm_stage,model_crm_stage,virtucent.virtucent_customer,1,0,0,0
+customer_rate_update,customer_rate_update,model_res_currency_rate,virtucent.virtucent_customer,1,0,1,0

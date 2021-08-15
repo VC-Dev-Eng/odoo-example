@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+    
+        <record id="base.user_admin" model="res.users">
+            <field name="company_ids" eval="[(4, ref('virtucent.company_2'))]"/>
+        </record>
+
+        
+
+    </data>
+</odoo>
